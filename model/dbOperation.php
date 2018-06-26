@@ -16,7 +16,29 @@ function login($ad, $mySifre) {
      return  json_encode(array('status' => 401));
 }
 
+function customerAdd($json) {
+  
+  $sirketAdi = $json['sirketAdi'];
+  $bankaAdi =$json['bankaAdi'];
+  $hesapNo = $json['hesapNo'];
+  $telefon = $json['telefon'];
+  $faks = $json['faks'];
+  $vergiDairesi = $json['vergiDairesi'];
+  $adres = $json['adres'];
 
+
+  $sql = "INSERT INTO musteri (sirketAdi, bankaAdi, hesapNo, telefon,faks, vergiDairesi, adres,bakiye)
+  VALUES ('$sirketAdi','$bankaAdi', '$hesapNo', '$telefon', '$faks', '$vergiDairesi', '$adres',0.3)";
+     echo $sql;
+   $result = connect_to_database()->query($sql);
+   
+   if($result)
+    {  
+        return json_encode(array('status' => 200, 'info' => 'Kayıt Eklenmiştir') );
+    }
+    else 
+      return  json_encode(array('status' => 401));
+}
 
 
 ?>
