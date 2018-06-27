@@ -1,4 +1,4 @@
-<?php 
+  <?php 
 include ('connection.php');
 
 
@@ -28,17 +28,33 @@ function customerAdd($json) {
 
 
   $sql = "INSERT INTO musteri (sirketAdi, bankaAdi, hesapNo, telefon,faks, vergiDairesi, adres,bakiye)
-  VALUES ('$sirketAdi','$bankaAdi', '$hesapNo', '$telefon', '$faks', '$vergiDairesi', '$adres',0.3)";
-     echo $sql;
+  VALUES ('$sirketAdi','$bankaAdi', '$hesapNo', '$telefon', '$faks', '$vergiDairesi', '$adres',0)";
    $result = connect_to_database()->query($sql);
    
    if($result)
     {  
-        return json_encode(array('status' => 200, 'info' => 'Kayıt Eklenmiştir') );
+      return json_encode(array('status' => 200, 'info' => 'Kayıt Eklenmiştir'));
     }
     else 
-      return  json_encode(array('status' => 401));
+      return  json_encode(array('status' => 401, 'info' => 'Kayıt Problemlidir'));
 }
-
-
+function customerList() {
+  $sql = 'SELECT * FROM musteri WHERE deletedAt="0000-00-00"';
+  $result = connect_to_database()->query($sql);
+  $i=0;
+  
+  if($result)
+   {
+   while( $row = $result->fetch_array(MYSQLI_ASSOC)){
+    
+    $response[] = $row;
+   }
+    return json_encode(array('info' => $response));
+   }
+   else {
+    return  json_encode(array('status' => 401, 'info' => 'işlem hatalı'));
+   }
+}
+error_reporting(E_ALL);
+ini_set("display_errors", 1);
 ?>
