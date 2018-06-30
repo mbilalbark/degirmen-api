@@ -72,13 +72,12 @@ function customerDelete($id) {
 function productAdd($json) {
    
   $cinsi = $json['cinsi'];
-  $fiyat =$json['fiyat'];
+  $fiyat = $json['fiyat'];
   $kdv = $json['kdv'];
   $kg = $json['kg'];
   $sql = "INSERT INTO urun (cinsi, fiyat, kdv, kg)
-  VALUES ('$cinsi','$fiyat', '$kdv', '$kg')";
+  VALUES ('$cinsi',$fiyat, $kdv, $kg)";
    $result = connect_to_database()->query($sql);
-   
    if($result)
     {  
       return json_encode(array('status' => 200, 'info' => 'Kayıt Eklenmiştir'));
@@ -90,12 +89,9 @@ function productAdd($json) {
 function productList() {
   $sql = 'SELECT * FROM urun WHERE deletedAt="0000-00-00"';
   $result = connect_to_database()->query($sql);
-  $i=0;
-  
   if($result)
    {
    while( $row = $result->fetch_array(MYSQLI_ASSOC)){
-    
     $response[] = $row;
    }
     return json_encode(array('info' => $response));
