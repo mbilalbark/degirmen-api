@@ -11,7 +11,6 @@ if(!empty($decoded['customerAdd']))
   echo customerAdd($decoded['customerAdd']);
 else if(!empty($decoded['customerList']))
   echo customerList();
-
-  error_reporting(E_ALL);
-ini_set("display_errors", 1);
+elseif(!empty($decoded['customerDelete']))
+  echo customerDelete($decoded['customerDelete']['Id']);
 ?>

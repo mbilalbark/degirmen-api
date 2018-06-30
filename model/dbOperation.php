@@ -55,6 +55,15 @@ function customerList() {
     return  json_encode(array('status' => 401, 'info' => 'işlem hatalı'));
    }
 }
-error_reporting(E_ALL);
-ini_set("display_errors", 1);
+function customerDelete($id) {
+  $d = date("Y-m-d H:i:s");
+  $sql ="UPDATE musteri SET deletedAt='$d' WHERE Id='$id'";
+  $result = connect_to_database()->query($sql);
+  if($result)
+  {  
+    return json_encode(array('status' => 200, 'info' => 'Kayıt Silinmiştir.'));
+  }
+  else 
+    return  json_encode(array('status' => 401, 'info' => 'Kayıt silinmemiştir.'));
+}
 ?>
